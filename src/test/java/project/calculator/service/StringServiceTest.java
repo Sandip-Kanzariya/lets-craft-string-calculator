@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import project.calculator.exception.NegativeNumberException;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 public class StringServiceTest {
@@ -112,5 +115,21 @@ public class StringServiceTest {
         int result = stringService.add("//[;][,]\n1;2,3;4,5");
         int expected = 1 + 2 + 3 + 4 + 5;
         assertThat(result).isEqualTo(expected);
+    }
+    
+
+
+    @Test
+    public void testAddWithNegativeNumber() {
+        assertThatThrownBy(() -> stringService.add("1,2,-3"))
+            .isInstanceOf(NegativeNumberException.class)
+            .hasMessageContaining("negative numbers not allowed: [-3]");
+    }
+
+    @Test
+    public void testAddWithMultipleNegativeNumbers() {
+        assertThatThrownBy(() -> stringService.add("1,-2,-3"))
+            .isInstanceOf(NegativeNumberException.class)
+            .hasMessageContaining("negative numbers not allowed: [-2, -3]");
     }
 }
