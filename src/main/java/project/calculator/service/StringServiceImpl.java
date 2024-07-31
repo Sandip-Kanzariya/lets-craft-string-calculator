@@ -15,7 +15,7 @@ public class StringServiceImpl implements StringService{
 		
 		System.out.println("Input : " + numbers);
 		
-		// Replace all non-numeric characters with space 
+		// Replace all non-numeric characters with space  
 	    String numericString = numbers.replaceAll("[^0-9-]", " "); 
 	    
 	    // Split the input string by spaces (or other delimiters) to get individual numbers
@@ -28,9 +28,9 @@ public class StringServiceImpl implements StringService{
 	    for (String token : tokens) {
 	    	if(!token.isEmpty()) {
 	    		int number = Integer.parseInt(token);
-                if (number < 0) {
+                if (number < 0) { // -ve number check
                     negatives.add(number);
-                } else {
+                } else if(number <= 1000){ // large number check
                     sum += number;
                 }	    		
 	    	}
@@ -39,6 +39,7 @@ public class StringServiceImpl implements StringService{
 	    if (!negatives.isEmpty()){
 	    	throw new NegativeNumberException("negative numbers not allowed: " + negatives);
         }
+	    
 		return sum;
 	}
 }

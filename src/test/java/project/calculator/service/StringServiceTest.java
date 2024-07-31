@@ -23,19 +23,25 @@ public class StringServiceTest {
 	public StringServiceTest(){
 	}
 	
+	/*   Basic test cases  */
 	@Test
     public void testAddEmptyString() {
         int result = stringService.add("");
         int expected = 0;
-        
         assertThat(result).isEqualTo(expected);
     }
-
+		
+    @Test
+    public void testAddSingleNumber() {
+        int result = stringService.add("4");
+        int expected = 4;
+        assertThat(result).isEqualTo(expected);
+    }
+    
     @Test
     public void testAddMultipleNumbers() {
         int result = stringService.add("4,5,5,6");
         int expected = 20;
-        
         assertThat(result).isEqualTo(expected);
     }
 
@@ -43,9 +49,19 @@ public class StringServiceTest {
     public void testAddWithSpaces() {
         int result = stringService.add("2 1 3 45 56 67");
         int expected = 2 + 1 + 3 + 45 + 56 + 67;
-        
         assertThat(result).isEqualTo(expected);
     }
+    
+    /* Numbers bigger than 1000 should be ignored */
+    
+    @Test
+    public void testAddLargeNumbers() {
+        int result = stringService.add("1000,2000,3");
+        int expected = 1000 + 3;
+        assertThat(result).isEqualTo(expected);
+    }
+    
+    /* Custom Delimiter & Multiple Delimiters (Include Spaces also)*/
     
     @Test
     public void testAddWithNewLines() {
@@ -65,13 +81,6 @@ public class StringServiceTest {
     public void testAddMultipleNumbersWithDifferentDelimiters() {
         int result = stringService.add("1,2\n3 4;5");
         int expected = 1 + 2 + 3 + 4 + 5;
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    public void testAddLargeNumbers() {
-        int result = stringService.add("1000,2000,3000");
-        int expected = 1000 + 2000 + 3000;
         assertThat(result).isEqualTo(expected);
     }
 
@@ -117,8 +126,22 @@ public class StringServiceTest {
         assertThat(result).isEqualTo(expected);
     }
     
+    @Test
+    public void testAddWithAnyLengthCustomDelimiters() {
+        int result = stringService.add("//[***]\\n1***2***3");
+        int expected = 1 + 2 + 3;
+        assertThat(result).isEqualTo(expected);
+    }
+    
+    @Test
+    public void testAddWithDelimiters() {
+        int result = stringService.add("//[*][%]\\n1*2%3");
+        int expected = 1 + 2 + 3;
+        assertThat(result).isEqualTo(expected);
+    }
 
-
+    /*       Negative Number not allowed             */
+    
     @Test
     public void testAddWithNegativeNumber() {
         assertThatThrownBy(() -> stringService.add("1,2,-3"))

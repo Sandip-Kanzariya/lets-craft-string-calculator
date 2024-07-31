@@ -1,8 +1,8 @@
 # Let's Craft String Calculator - Incubyte TDD 
 
-### Project Flow 
-
-![Project](https://github.com/user-attachments/assets/a04a803d-5a95-4cad-bc28-2d1665be27dd)
+### Project Flow
+ 
+![Project](https://github.com/user-attachments/assets/f2985a75-1e0c-43d5-bf66-c768ac257e14)
 
 ### Tech Stack : 
 - Test Driven Developement (TDD)
